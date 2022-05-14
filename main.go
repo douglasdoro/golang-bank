@@ -1,8 +1,8 @@
 package main
 
 import (
+	contas "banco/accounts"
 	"banco/clients"
-	"banco/contas"
 	"fmt"
 )
 
@@ -24,13 +24,13 @@ func main() {
 
 	contaDouglas := contas.ContaCorrente{
 		Client:        clienteDouglas,
-		NumeroAgencia: 589,
-		NumeroConta:   123456,
+		AgencyNumber:  589,
+		AccountNumber: 123456,
 	}
 	contaDouglas.Depositar(300)
 	PagarBoleto(&contaDouglas, 60)
 
-	fmt.Println("Saldo Douglas:", contaDouglas.ObterSaldo())
+	fmt.Println("Saldo Douglas:", contaDouglas.GetBalance())
 
 	contaGabi := contas.ContaPoupanca{
 		Client:        clients.Client{Name: "Gabriela"},
@@ -40,5 +40,5 @@ func main() {
 	contaGabi.Depositar(500)
 	PagarBoleto(&contaGabi, 40)
 
-	fmt.Println("Saldo Gabi", contaGabi.ObterSaldo())
+	fmt.Println("Saldo Gabi", contaGabi.GetBalance())
 }

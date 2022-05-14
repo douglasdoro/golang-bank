@@ -1,17 +1,14 @@
-package contas
+package accounts
 
-import (
-	clientes "banco/clients"
-)
+import clientes "banco/clients"
 
-type ContaCorrente struct {
-	Client        clientes.Client
-	NumeroAgencia int
-	NumeroConta   int
-	saldo         float64
+type ContaPoupanca struct {
+	Client                               clientes.Client
+	NumeroAgencia, NumeroConta, Operacao int
+	saldo                                float64
 }
 
-func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *ContaCorrente) bool {
+func (c *ContaPoupanca) Transferir(valorTransferencia float64, contaDestino *ContaPoupanca) bool {
 	if valorTransferencia > 0 && c.saldo > valorTransferencia {
 		contaDestino.Depositar(valorTransferencia)
 		c.saldo -= valorTransferencia
@@ -22,7 +19,7 @@ func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *Con
 	return false
 }
 
-func (c *ContaCorrente) Sacar(valorSaque float64) string {
+func (c *ContaPoupanca) Sacar(valorSaque float64) string {
 	podeSacar := valorSaque > 0 && valorSaque <= c.saldo
 
 	if podeSacar {
@@ -34,7 +31,7 @@ func (c *ContaCorrente) Sacar(valorSaque float64) string {
 	return "Saldo insuficiente"
 }
 
-func (c *ContaCorrente) Depositar(valorDeposito float64) (string, float64) {
+func (c *ContaPoupanca) Depositar(valorDeposito float64) (string, float64) {
 	if valorDeposito > 0 {
 		c.saldo += valorDeposito
 		return "Saldo realizado com sucesso", c.saldo
@@ -43,6 +40,6 @@ func (c *ContaCorrente) Depositar(valorDeposito float64) (string, float64) {
 	return "Saldo não sofreu alteração", c.saldo
 }
 
-func (c *ContaCorrente) ObterSaldo() float64 {
+func (c *ContaPoupanca) GetBalance() float64 {
 	return c.saldo
 }
