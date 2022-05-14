@@ -1,9 +1,9 @@
 package contas
 
-import "banco/clientes"
+import clientes "banco/clients"
 
 type ContaPoupanca struct {
-	Titular                              clientes.Titular
+	Client                               clientes.Client
 	NumeroAgencia, NumeroConta, Operacao int
 	saldo                                float64
 }

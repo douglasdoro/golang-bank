@@ -1,7 +1,7 @@
 package main
 
 import (
-	"banco/clientes"
+	"banco/clients"
 	"banco/contas"
 	"fmt"
 )
@@ -15,15 +15,15 @@ type verificarConta interface {
 }
 
 func main() {
-	clienteDouglas := clientes.Titular{
-		Nome:      "Douglas",
-		Idade:     40,
-		CPF:       "123.123.123-40",
-		Profissao: "Dev",
+	clienteDouglas := clients.Client{
+		Name:       "Douglas",
+		Age:        40,
+		NationalID: "123.123.123-40",
+		Occupation: "Dev",
 	}
 
 	contaDouglas := contas.ContaCorrente{
-		Titular:       clienteDouglas,
+		Client:        clienteDouglas,
 		NumeroAgencia: 589,
 		NumeroConta:   123456,
 	}
@@ -33,7 +33,7 @@ func main() {
 	fmt.Println("Saldo Douglas:", contaDouglas.ObterSaldo())
 
 	contaGabi := contas.ContaPoupanca{
-		Titular:       clientes.Titular{Nome: "Gabriela"},
+		Client:        clients.Client{Name: "Gabriela"},
 		NumeroConta:   23455,
 		NumeroAgencia: 432,
 	}
