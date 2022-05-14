@@ -13,7 +13,7 @@ type ContaCorrente struct {
 
 func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *ContaCorrente) bool {
 	if valorTransferencia > 0 && c.balance > valorTransferencia {
-		contaDestino.Depositar(valorTransferencia)
+		contaDestino.Deposit(valorTransferencia)
 		c.balance -= valorTransferencia
 
 		return true
@@ -34,13 +34,13 @@ func (c *ContaCorrente) Sacar(valorSaque float64) string {
 	return "Saldo insuficiente"
 }
 
-func (c *ContaCorrente) Depositar(valorDeposito float64) (string, float64) {
-	if valorDeposito > 0 {
-		c.balance += valorDeposito
-		return "Saldo realizado com sucesso", c.balance
+func (c *ContaCorrente) Deposit(depositAmount float64) (string, float64) {
+	if depositAmount > 0 {
+		c.balance += depositAmount
+		return "The transaction was successfully", c.balance
 	}
 
-	return "Saldo não sofreu alteração", c.balance
+	return "The transaction was successfully", c.balance
 }
 
 func (c *ContaCorrente) GetBalance() float64 {
