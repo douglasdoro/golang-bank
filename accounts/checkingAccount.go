@@ -1,7 +1,7 @@
 package accounts
 
 import (
-	"banco/clients"
+	"bank/clients"
 )
 
 type ContaCorrente struct {

@@ -1,7 +1,7 @@
 package accounts
 
 import (
-	"banco/clients"
+	"bank/clients"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

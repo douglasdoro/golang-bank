@@ -1,6 +1,6 @@
 package accounts
 
-import clientes "banco/clients"
+import clientes "bank/clients"
 
 type ContaPoupanca struct {
 	Client                               clientes.Client

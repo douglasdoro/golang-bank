@@ -1,8 +1,8 @@
 package main
 
 import (
-	contas "banco/accounts"
-	"banco/clients"
+	contas "bank/accounts"
+	"bank/clients"
 	"fmt"
 )
 
