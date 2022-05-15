@@ -7,27 +7,26 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestShouldReturnTheCurrentBalance(t *testing.T) {
-
-	cc := ContaCorrente{
+func createCheckingAccountMock() ContaCorrente {
+	var checkingAccountMock = ContaCorrente{
 		Client:        clients.Client{},
 		AgencyNumber:  0001,
 		AccountNumber: 1234,
 		balance:       100,
 	}
 
-	assert.Equal(t, float64(100), cc.GetBalance(), "The balance should be equal to 100")
+	return checkingAccountMock
+}
+
+func TestShouldReturnTheCurrentBalance(t *testing.T) {
+	checkingAccountMock := createCheckingAccountMock()
+	assert.Equal(t, float64(100), checkingAccountMock.GetBalance(), "The balance should be equal to 100")
 }
 
 func TestShouldReturnNewBalanceValueAfterDeposit(t *testing.T) {
-	checkingAccount := ContaCorrente{
-		Client:        clients.Client{},
-		AgencyNumber:  0001,
-		AccountNumber: 1234,
-		balance:       100,
-	}
+	checkingAccountMock := createCheckingAccountMock()
 
-	message, newBalance := checkingAccount.Deposit(100.0)
+	message, newBalance := checkingAccountMock.Deposit(100.0)
 
 	assert.Equal(t, 200.0, newBalance, "The balance should be equal to 200.0")
 	assert.Equal(t, "The transaction was successfully", message, "The response mensage is wrong")
@@ -35,47 +34,38 @@ func TestShouldReturnNewBalanceValueAfterDeposit(t *testing.T) {
 }
 
 func TestShouldReturnSameBalanceValueAfterZeroDeposit(t *testing.T) {
-	checkingAccount := ContaCorrente{
-		Client:        clients.Client{},
-		AgencyNumber:  0001,
-		AccountNumber: 1234,
-		balance:       100,
-	}
+	checkingAccountMock := createCheckingAccountMock()
 
-	message, newBalance := checkingAccount.Deposit(0.0)
+	message, newBalance := checkingAccountMock.Deposit(0.0)
 
 	assert.Equal(t, 100.0, newBalance, "The balance should be equal to 100.0")
 	assert.Equal(t, "The transaction was successfully", message, "The response mensage is wrong")
 }
 
 func TestShouldReturnSameBalanceValueAfterNegativeDeposit(t *testing.T) {
-	checkingAccount := ContaCorrente{
-		Client:        clients.Client{},
-		AgencyNumber:  0001,
-		AccountNumber: 1234,
-		balance:       100,
-	}
+	checkingAccountMock := createCheckingAccountMock()
 
-	message, newBalance := checkingAccount.Deposit(-10.0)
+	message, newBalance := checkingAccountMock.Deposit(-10.0)
 
 	assert.Equal(t, 100.0, newBalance, "The balance should be equal to 100.0")
 	assert.Equal(t, "The transaction was successfully", message, "The response mensage is wrong")
 }
 
 func TestShouldSubtractTheAmountWithdrawnFromTheBalance(t *testing.T) {
-	checkingAccount := ContaCorrente{
-		Client:        clients.Client{},
-		AgencyNumber:  0001,
-		AccountNumber: 1234,
-		balance:       100,
-	}
+	checkingAccountMock := createCheckingAccountMock()
 
 	withdrawAmount := 50.0
 	expectedMessage := "The transaction was successfully"
 	expectedBalance := 50.0
 
-	message, balance := checkingAccount.Withdraw(withdrawAmount)
+	message, balance := checkingAccountMock.Withdraw(withdrawAmount)
 
 	assert.Equal(t, expectedBalance, balance)
 	assert.Equal(t, expectedMessage, message)
+}
+
+func TestTransfer(t *testing.T) {
+	checkingAccountMock := createCheckingAccountMock()
+
+	assert.Equal(t, 100.0, checkingAccountMock.GetBalance())
 }
