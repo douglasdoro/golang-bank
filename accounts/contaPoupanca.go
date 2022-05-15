@@ -19,16 +19,16 @@ func (c *ContaPoupanca) Transferir(valorTransferencia float64, contaDestino *Con
 	return false
 }
 
-func (c *ContaPoupanca) Sacar(valorSaque float64) string {
+func (c *ContaPoupanca) Withdraw(valorSaque float64) (string, float64) {
 	podeSacar := valorSaque > 0 && valorSaque <= c.saldo
 
 	if podeSacar {
 		c.saldo -= valorSaque
 
-		return "Saque realizado com sucesso"
+		return "Saque realizado com sucesso", c.GetBalance()
 	}
 
-	return "Saldo insuficiente"
+	return "Saldo insuficiente", c.GetBalance()
 }
 
 func (c *ContaPoupanca) Depositar(valorDeposito float64) (string, float64) {

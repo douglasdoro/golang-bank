@@ -7,11 +7,11 @@ import (
 )
 
 func PagarBoleto(conta verificarConta, valorBoleto float64) {
-	conta.Sacar(valorBoleto)
+	conta.Withdraw(valorBoleto)
 }
 
 type verificarConta interface {
-	Sacar(valor float64) string
+	Withdraw(valor float64) (string, float64)
 }
 
 func main() {
@@ -22,12 +22,12 @@ func main() {
 		Occupation: "Dev",
 	}
 
-	contaDouglas := contas.ContaCorrente{
+	contaDouglas := contas.CheckingAccount{
 		Client:        clienteDouglas,
 		AgencyNumber:  589,
 		AccountNumber: 123456,
 	}
-	contaDouglas.Depositar(300)
+	contaDouglas.Deposit(300)
 	PagarBoleto(&contaDouglas, 60)
 
 	fmt.Println("Saldo Douglas:", contaDouglas.GetBalance())

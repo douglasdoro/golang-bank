@@ -7,8 +7,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func createCheckingAccountMock() ContaCorrente {
-	var checkingAccountMock = ContaCorrente{
+func createCheckingAccountMock() CheckingAccount {
+	var checkingAccountMock = CheckingAccount{
 		Client:        clients.Client{},
 		AgencyNumber:  0001,
 		AccountNumber: 1234,
@@ -64,8 +64,18 @@ func TestShouldSubtractTheAmountWithdrawnFromTheBalance(t *testing.T) {
 	assert.Equal(t, expectedMessage, message)
 }
 
-func TestTransfer(t *testing.T) {
+func TestShouldValidateTranfer(t *testing.T) {
 	checkingAccountMock := createCheckingAccountMock()
 
-	assert.Equal(t, 100.0, checkingAccountMock.GetBalance())
+	destinoAccountMock := CheckingAccount{
+		Client:        clients.Client{},
+		AgencyNumber:  0,
+		AccountNumber: 0,
+		balance:       10,
+	}
+
+	transferAmount := 50.0
+	transferStatus := checkingAccountMock.Transfer(transferAmount, &destinoAccountMock)
+
+	assert.True(t, transferStatus)
 }

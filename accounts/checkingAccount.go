@@ -4,17 +4,17 @@ import (
 	"bank/clients"
 )
 
-type ContaCorrente struct {
+type CheckingAccount struct {
 	Client        clients.Client
 	AgencyNumber  int
 	AccountNumber int
 	balance       float64
 }
 
-func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *ContaCorrente) bool {
-	if valorTransferencia > 0 && c.balance > valorTransferencia {
-		contaDestino.Deposit(valorTransferencia)
-		c.balance -= valorTransferencia
+func (c *CheckingAccount) Transfer(transferAmount float64, destinoAccount *CheckingAccount) bool {
+	if transferAmount > 0 && c.balance > transferAmount {
+		destinoAccount.Deposit(transferAmount)
+		c.balance -= transferAmount
 
 		return true
 	}
@@ -22,7 +22,7 @@ func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *Con
 	return false
 }
 
-func (c *ContaCorrente) Withdraw(amountWithdraw float64) (string, float64) {
+func (c *CheckingAccount) Withdraw(amountWithdraw float64) (string, float64) {
 	canWithdraw := amountWithdraw > 0 && amountWithdraw <= c.balance
 
 	if canWithdraw {
@@ -34,7 +34,7 @@ func (c *ContaCorrente) Withdraw(amountWithdraw float64) (string, float64) {
 	return "The transaction was successfully", c.balance
 }
 
-func (c *ContaCorrente) Deposit(depositAmount float64) (string, float64) {
+func (c *CheckingAccount) Deposit(depositAmount float64) (string, float64) {
 	if depositAmount > 0 {
 		c.balance += depositAmount
 		return "The transaction was successfully", c.balance
@@ -43,6 +43,6 @@ func (c *ContaCorrente) Deposit(depositAmount float64) (string, float64) {
 	return "The transaction was successfully", c.balance
 }
 
-func (c *ContaCorrente) GetBalance() float64 {
+func (c *CheckingAccount) GetBalance() float64 {
 	return c.balance
 }
