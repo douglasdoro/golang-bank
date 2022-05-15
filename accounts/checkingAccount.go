@@ -22,16 +22,16 @@ func (c *ContaCorrente) Transferir(valorTransferencia float64, contaDestino *Con
 	return false
 }
 
-func (c *ContaCorrente) Sacar(valorSaque float64) string {
-	podeSacar := valorSaque > 0 && valorSaque <= c.balance
+func (c *ContaCorrente) Withdraw(amountWithdraw float64) (string, float64) {
+	canWithdraw := amountWithdraw > 0 && amountWithdraw <= c.balance
 
-	if podeSacar {
-		c.balance -= valorSaque
+	if canWithdraw {
+		c.balance -= amountWithdraw
 
-		return "Saque realizado com sucesso"
+		return "The transaction was successfully", c.balance
 	}
 
-	return "Saldo insuficiente"
+	return "The transaction was successfully", c.balance
 }
 
 func (c *ContaCorrente) Deposit(depositAmount float64) (string, float64) {

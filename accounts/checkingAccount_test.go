@@ -61,3 +61,21 @@ func TestShouldReturnSameBalanceValueAfterNegativeDeposit(t *testing.T) {
 	assert.Equal(t, 100.0, newBalance, "The balance should be equal to 100.0")
 	assert.Equal(t, "The transaction was successfully", message, "The response mensage is wrong")
 }
+
+func TestShouldSubtractTheAmountWithdrawnFromTheBalance(t *testing.T) {
+	checkingAccount := ContaCorrente{
+		Client:        clients.Client{},
+		AgencyNumber:  0001,
+		AccountNumber: 1234,
+		balance:       100,
+	}
+
+	withdrawAmount := 50.0
+	expectedMessage := "The transaction was successfully"
+	expectedBalance := 50.0
+
+	message, balance := checkingAccount.Withdraw(withdrawAmount)
+
+	assert.Equal(t, expectedBalance, balance)
+	assert.Equal(t, expectedMessage, message)
+}
