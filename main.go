@@ -32,12 +32,12 @@ func main() {
 
 	fmt.Println("Saldo Douglas:", contaDouglas.GetBalance())
 
-	contaGabi := contas.ContaPoupanca{
+	contaGabi := contas.SavingAccount{
 		Client:        clients.Client{Name: "Gabriela"},
-		NumeroConta:   23455,
-		NumeroAgencia: 432,
+		AccountNumber: 23455,
+		AgencyNumber:  432,
 	}
-	contaGabi.Depositar(500)
+	contaGabi.Deposit(500)
 	PagarBoleto(&contaGabi, 40)
 
 	fmt.Println("Saldo Gabi", contaGabi.GetBalance())
